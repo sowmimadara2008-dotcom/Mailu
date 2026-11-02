@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My world ❤️‍🩹</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 80% 20%, #1a1c4b, #0d0e26 60%, #050515);
+      color: #fff;
+      overflow-x: hidden;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Moon & Planet Effects */
+    .moon {
+      position: fixed;
+      top: 40px;
+      right: 50px;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, #fffdf0, #e0e6ff 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(255, 182, 193, 0.4);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .planet {
+      position: fixed;
+      bottom: 30px;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #ff69b4, #8b008b);
+      border-radius: 50%;
+      opacity: 0.3;
+      filter: blur(4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Stars Animation */
+    .stars {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Hearts Floating Animation */
+    .hearts-container {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .heart {
+      position: absolute;
+      animation: floatUp 4s infinite linear;
+      font-size: 22px;
+      color: #ff69b4;
+      text-shadow: 0 0 10px #ff1493;
+      opacity: 0;
+    }
+    @keyframes floatUp { 
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0.9; } 
+      100% { transform: translateY(-10vh) scale(1.4); opacity: 0; } 
+    }
+
+    /* Scene Transitions */
+    .scene {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 3;
+    }
+    .scene.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Content Box Container */
+    .content-box {
+      background: rgba(15, 12, 41, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 105, 180, 0.3);
+      padding: 45px 30px;
+      border-radius: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 20, 147, 0.2);
+      max-width: 480px;
+      width: 90%;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: #ff8da1;
+      text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: #f1e6ff;
+    }
+    .sentiment-text {
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #ffd1dc;
+      text-align: justify;
+      text-align-last: center;
+    }
+
+    .photo-frame img {
+      width: 210px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ff69b4;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.5);
+      margin-bottom: 25px;
+    }
+
+    .next-btn {
+      background: linear-gradient(45deg, #d63384, #ff1493);
+      color: #fff;
+      border: none;
+      padding: 14px 35px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+    }
+    .next-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio File -->
+  <audio id="bg-music" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Sky Effects -->
+  <div class="moon"></div>
+  <div class="planet"></div>
+  <div class="stars" id="stars"></div>
+  <div class="hearts-container" id="hearts"></div>
+
+  <!-- Page 1: Welcome -->
+  <section id="scene-1" class="scene active">
+    <div class="content-box">
+      <h1>Happy 1st Year</h1>
+      <h2>நமது அழகான பயணம் தொடங்கி ஒரு வருடம் ஆச்சு... ✨</h2>
+      <button onclick="startExperience(1, 2)" class="next-btn">தொடங்கலாம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 2: Sorry -->
+  <section id="scene-2" class="scene">
+    <div class="content-box">
+      <h1>Sorry... 🥺</h1>
+      <h2>என் மேல கோபப்படாதே... என்னை மன்னிச்சிரு 💔</h2>
+      <button onclick="nextScene(2, 3)" class="next-btn">அடுத்த பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 3: Special Dialog -->
+  <section id="scene-3" class="scene">
+    <div class="content-box">
+      <p class="sentiment-text">
+        "என்னோட 11.11 wish ... நீ எப்பவுமே சிரிச்சு சந்தோஷமா இருக்கணும், நான் அதை பாக்கணும். உன்னை நான் ரொம்ப கஷ்டப்படுத்திட்டேன். ஆனா நீ ஹாப்பியா இருக்கணும், அது ஒன்னுதான் நான் அந்த கடவுள் கிட்டயும், இந்த பிரபஞ்சத்துகிட்டயும் (Universe) கேக்குறேன்... 💖"
+      </p>
+      <button onclick="nextScene(3, 4)" class="next-btn">அடுத்த பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 4: Memories -->
+  <section id="scene-4" class="scene">
+    <div class="content-box">
+      <h1>Memories ✨</h1>
+      <h2>oii pondatii edhu unaku palagi ponathu tha naa neraya tharava
+  edha unaku panniruke ana entha tharava something special dii en nu therla but edhukaga naa kitta thata 4 hours effort poturuke
+  ana adhu aothapiruchu naa epdiyo unna impress pannanu nu nenache ana mudiyala 😮‍💨but eppatha neyabagam varuthu
+  first time unaaga entha coding la surprise panlanu edha pathi therinjukute backround la audio illama periya effect illama panna antha propose coding 😌
+  adhu simple la irunthalu video call la un kanla vantha kanner🥹antha smile ennu en kanla iruku👀
+  feb 14 arambicha kadha illa edhu dindugul junction bye thirimbi pakama pona antha oru second 🔚 athuku aprm pesuno close aagunom ellame nalla pochu nadakathunu nenacha onnu 
+  nee enna love panrathu!ana athuvum nadanthuchu unna avlo nalla pathukute neeum enna nalla pathukute naa enna ketalum vangi tharuva batharama pathukute🫂
+  ana avlo panni enakaga nee neraya mathikita ana naa athuku aprm marite naa unta evlo kevalama nadanthalum evlo asiga paduthunalum enna manuchu yethukita💎
+  ana apa kuda naa again thiripi adhe thappa tha panre ana appaum enna ethukuta samii dii nee ❤️‍🩹neraya hurt pannite romba romba hurt pannite ana adhu ye na antha edathula naa hurt aagiruke 
+  athunala kovathula enna pesure, thappa irunthalum enna hurt pannita apdi nu oru ego atha mathikure pondatii manuchuru 🙇‍♀️ aprm kaasu matter la naa apdi nadanthukutathuku sorry dii 😔
+  naa eni palaya mari unna pathukure promise🫳🧿🩹😚❤️‍🩹. 💕</h2>
+      <button onclick="nextScene(4, 5)" class="next-btn">அடுத்த பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 5: Message -->
+  <section id="scene-5" class="scene">
+    <div class="content-box">
+      <h2>உனக்கான வரிகள் 💌</h2>
+      <p class="sentiment-text" style="margin-top: 15px;">
+        நீ என் கூட இருக்கும் போது இந்த உலகமே எனக்கு அழகா தெரியுது. உன் சிரிப்பு ஒன்னு போதும் என் எல்லா கவலையையும் மறக்க வைக்க... 🌸
+      </p>
+      <button onclick="nextScene(5, 6)" class="next-btn">அடுத்த பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 6: Photo -->
+  <section id="scene-6" class="scene">
+    <div class="content-box">
+      <div class="photo-frame">
+        <img src="photo1.jpg" alt="Our Memory">
+      </div>
+      <h2>என் வாழ்வின் இறுதி 7 நிமிடம் நீ 🤍</h2>
+      <button onclick="nextScene(6, 7)" class="next-btn">அடுத்த பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 7: Final Love Message -->
+  <section id="scene-7" class="scene">
+    <div class="content-box">
+      <h1>Love Youdi</h1>
+      <h1 style="font-size: 3rem; color: #ff1493;">பொண்டாட்டி ❤️‍🩹✨</h1>
+      <button onclick="nextScene(7, 8)" class="next-btn">இறுதி பக்கம் ➡️</button>
+    </div>
+  </section>
+
+  <!-- Page 8: Forever -->
+  <section id="scene-8" class="scene">
+    <div class="content-box">
+      <h1>Forever & Always 💫</h1>
+      <h2>எந்நாளும் என்னவள் ஆகிய நீ மட்டுமே 🙇‍♀️..உன் கால் அடியில் சரண் அடைவேனே தவிர 
+        வேறு சேலையெயை தேடி செல்லமாட்டேன் 🙅‍♀️! கனவிலும் சரி கல்லறையிலும் சரி!🧿😘😍</h2>
+    </div>
+  </section>
+
+  <script>
+    // Create Twinkling Stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 70; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
+      starsContainer.appendChild(star);
+    }
+
+    // Create Floating Hearts
+    const heartsContainer = document.getElementById('hearts');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️‍🩹';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+    setInterval(createHeart, 350);
+
+    // Audio & Navigation Handling
+    const bgMusic = document.getElementById('bg-music');
+
+    function startExperience(current, next) {
+      bgMusic.play().catch(e => console.log("Audio play error:", e));
+      nextScene(current, next);
+    }
+
+    function nextScene(current, next) {
+      document.getElementById('scene-' + current).classList.remove('active');
+      document.getElementById('scene-' + next).classList.add('active');
+    }
+  </script>
+</body>
+</html>
